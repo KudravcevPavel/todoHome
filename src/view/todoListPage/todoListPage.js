@@ -75,8 +75,12 @@ function renderTodoTotal(doc, totalCount) {
 
 function renderStatPage(doc) {
   const filterDiv = createElement(doc, "div", "list-filter-container");
-  filterDiv.innerHTML = "Show statistics."; // implement as link <a>
-
+  const link = createElement(doc, "a", "statistick");
+  link.setAttribute("href", "#link-statistick");
+  link.innerHTML = "Show statistics."; // implement as link <a>
+  filterDiv.append(link);
+  /*   const router = configureRouter(doc, "/");
+  router.navigate("/"); */
   return filterDiv;
 }
 
@@ -96,7 +100,7 @@ function renderTodoList(doc, allTodo) {
   } else {
     allTodo.forEach((todo) => {
       const todoElement = renderTodoItem(doc, todo);
-      todoList.append(todoElement);
+      todoList.prepend(todoElement);
     });
   }
 

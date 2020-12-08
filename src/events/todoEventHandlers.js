@@ -11,7 +11,6 @@ function renderTodoScreen(doc, event) {
 
 function navigateToListPage(doc) {
   console.log(`Rendering list screen.`);
-
   const router = configureRouter(doc, "/");
   router.navigate("/");
 }

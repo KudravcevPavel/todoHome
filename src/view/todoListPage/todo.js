@@ -24,8 +24,8 @@ function formatDateForPanel(prefix, date) {
   const datePart = `${date.getDate()}.${
     date.getMonth() + 1
   }.${date.getFullYear()}`;
-
-  const timePart = `${date.getHours()}:${date.getMinutes()}`;
+  
+  const timePart = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}`;
 
   return `${prefix}: ${datePart} - ${timePart}`;
 }
@@ -63,9 +63,10 @@ function renderButton(doc, actionName, todoId, className, title) {
   button.innerHTML = title;
   button.setAttribute("data-action", actionName);
   button.setAttribute("data-id", todoId);
-
   return button;
 }
+
+
 
 function renderControlBlock(doc, todo) {
   const controlBlock = createElement(doc, "div", "control-block");
@@ -73,7 +74,7 @@ function renderControlBlock(doc, todo) {
   controlBlock.append(
     renderButton(doc, "view", todo.id, "view-button", "View")
   );
-
+ 
   if (todo.state === todoState.InProcess) {
     controlBlock.append(
       renderButton(doc, "postpone", todo.id, "postpone-button", "Postpone")

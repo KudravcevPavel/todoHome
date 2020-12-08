@@ -1,4 +1,6 @@
-import { getTodoInput } from "../helpers.js";
+import {
+  getTodoInput
+} from "../helpers.js";
 
 import todoStorage from "../model/todoStorage.js";
 import renderTodoList from "../view/todoListPage/todoList.js";
@@ -54,7 +56,9 @@ function notifyAboutDeletedTodo(doc) {
 
 function notifyAboutTodoView(doc, todoId) {
   const todoItemShown = new CustomEvent("todo-item-shown", {
-    detail: { todoId },
+    detail: {
+      todoId
+    },
   });
   doc.dispatchEvent(todoItemShown);
 }
@@ -95,66 +99,71 @@ function todoListActionHandler(doc, event) {
 }
 
 let boundNavigateToTodo = null;
+let boundUpdateTodoLis = null;
 
 
 
 export function getListEventHandlers(doc) {
 
   boundNavigateToTodo =
-  boundNavigateToTodo !== null
-    ? boundNavigateToTodo
-    : navigateToTodo.bind(null, doc);
-  
-  return [
-    {
-      elementId: "add-todo-button",
-      eventName: "click",
-      handler: addTodoHandler.bind(null, doc),
-    },
-    {
-      elementId: "clear-form-button",
-      eventName: "click",
-      handler: clearFormHandler.bind(null, doc),
-    },
-    {
-      elementId: "todo-list",
-      eventName: "click",
-      handler: todoListActionHandler.bind(null, doc),
-    },
-    {
-      element: doc,
-      eventName: "todo-item-created",
-      handler: updateTotalTodoCount.bind(null, doc),
-    },
-    {
-      element: doc,
-      eventName: "todo-item-created",
-      handler: updateTodoList.bind(null, doc),
-    },
-    {
-      element: doc,
-      eventName: "todo-item-created",
-      handler: clearFormHandler.bind(null, doc),
-    },
-    {
-      element: doc,
-      eventName: "todo-item-changed",
-      handler: updateTodoList.bind(null, doc),
-    },
-    {
-      element: doc,
-      eventName: "todo-item-deleted",
-      handler: updateTotalTodoCount.bind(null, doc),
-    },
-    {
-      element: doc,
-      eventName: "todo-item-deleted",
-      handler: updateTodoList.bind(null, doc),
-    },
-    {
-      element: doc,
-      eventName: "todo-item-shown",
-      handler: boundNavigateToTodo,
-    },
-  ];
-}
+    boundNavigateToTodo !== null ?
+    boundNavigateToTodo :
+    navigateToTodo.bind(null, doc);
+
+  boundUpdateTodoLis =
+    boundUpdateTodoLis !== null ?
+    boundUpdateTodoLis :
+    updateTodoList.bind(null, doc);
+
+    return [{
+        elementId: "add-todo-button",
+        eventName: "click",
+        handler: addTodoHandler.bind(null, doc),
+      },
+      {
+        elementId: "clear-form-button",
+        eventName: "click",
+        handler: clearFormHandler.bind(null, doc),
+      },
+      {
+        elementId: "todo-list",
+        eventName: "click",
+        handler: todoListActionHandler.bind(null, doc),
+      },
+      {
+        element: doc,
+        eventName: "todo-item-created",
+        handler: updateTotalTodoCount.bind(null, doc),
+      },
+      {
+        element: doc,
+        eventName: "todo-item-created",
+        handler: boundUpdateTodoLis,
+      },
+        {
+          element: doc,
+          eventName: "todo-item-created",
+          handler: clearFormHandler.bind(null, doc),
+        },
+        {
+          element: doc,
+          eventName: "todo-item-changed",
+          handler: updateTodoList.bind(null, doc),
+        },
+        {
+          element: doc,
+          eventName: "todo-item-deleted",
+          handler: updateTotalTodoCount.bind(null, doc),
+        },
+        {
+          element: doc,
+          eventName: "todo-item-deleted",
+          handler: boundUpdateTodoLis,
+        },
+        {
+          element: doc,
+          eventName: "todo-item-shown",
+          handler: boundNavigateToTodo,
+        },
+      ];
+    }

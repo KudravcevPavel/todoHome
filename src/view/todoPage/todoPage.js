@@ -130,3 +130,5 @@ export default function renderTodoPage(doc, todo) {
 
   setupEventListeners(doc, getTodoEventHandlers(doc));
 }
+
+
