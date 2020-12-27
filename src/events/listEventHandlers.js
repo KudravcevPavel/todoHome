@@ -63,6 +63,12 @@ function notifyAboutTodoView(doc, todoId) {
   doc.dispatchEvent(todoItemShown);
 }
 
+function renderStatPage(doc) {
+  const router = configureRouter(doc, "/");
+  router.navigate("report");
+}
+
+
 function todoListActionHandler(doc, event) {
   const actionName = event.target.dataset["action"];
   const todoId = event.target.dataset["id"];
@@ -100,7 +106,7 @@ function todoListActionHandler(doc, event) {
 
 let boundNavigateToTodo = null;
 let boundUpdateTodoLis = null;
-
+let boundNavigateToReportPage = null;
 
 
 export function getListEventHandlers(doc) {
@@ -114,6 +120,12 @@ export function getListEventHandlers(doc) {
     boundUpdateTodoLis !== null ?
     boundUpdateTodoLis :
     updateTodoList.bind(null, doc);
+    
+  boundNavigateToReportPage =
+    boundNavigateToReportPage !== null ?
+    boundNavigateToReportPage :
+    renderStatPage.bind(null, doc);
+
 
     return [{
         elementId: "add-todo-button",
@@ -129,6 +141,16 @@ export function getListEventHandlers(doc) {
         elementId: "todo-list",
         eventName: "click",
         handler: todoListActionHandler.bind(null, doc),
+      },
+      {
+        elementId: "link-stat",
+        eventName: "click",
+        handler: (event) => event.preventDefault(),
+      },
+      {
+        elementId: "link-stat",
+        eventName: "click",
+        handler: boundNavigateToReportPage,
       },
       {
         element: doc,

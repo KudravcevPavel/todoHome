@@ -17,3 +17,5 @@ export function clearRootElement(doc) {
 
   return rootElement;
 }
+
+

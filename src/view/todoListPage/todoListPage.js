@@ -76,7 +76,8 @@ function renderTodoTotal(doc, totalCount) {
 function renderStatPage(doc) {
   const filterDiv = createElement(doc, "div", "list-filter-container");
   const link = createElement(doc, "a", "statistick");
-  link.setAttribute("href", "#link-statistick");
+  link.setAttribute("href", "#");
+  link.id = "link-stat";
   link.innerHTML = "Show statistics."; // implement as link <a>
   filterDiv.append(link);
   /*   const router = configureRouter(doc, "/");
